@@ -1,0 +1,12 @@
+@import url("reset.css");
+@import url("text.css");
+@import url("960.css");
+@import url("forms.css");
+
+table{
+	width:100%;
+}
+
+th{
+	text-align:left;
+}
