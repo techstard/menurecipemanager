@@ -15,15 +15,38 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`recipe_manager` /*!40100 DEFAULT CHARAC
 
 USE `recipe_manager`;
 
-/*Table structure for table `fractions` */
+/*Table structure for table `ingredient_lists` */
 
-DROP TABLE IF EXISTS `fractions`;
+DROP TABLE IF EXISTS `ingredient_lists`;
 
-CREATE TABLE `fractions` (
-  `id` int(2) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `fraction` varchar(4) NOT NULL,
-  `decimal` float DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `ingredient_lists` (
+  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `ingredient` varchar(64) NOT NULL,
+  `fractional_amount` float DEFAULT NULL,
+  `whole_amount` int(2) unsigned DEFAULT NULL,
+  `instruction` varchar(64) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `measurement_id` int(10) unsigned zerofill NOT NULL,
+  `ingredient_id` int(10) unsigned zerofill NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `measurement_id` (`measurement_id`),
+  KEY `ingredient_id` (`ingredient_id`),
+  CONSTRAINT `measurement_id` FOREIGN KEY (`measurement_id`) REFERENCES `measurements` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `ingredient_id` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Table structure for table `ingredient_lists_recipes` */
+
+DROP TABLE IF EXISTS `ingredient_lists_recipes`;
+
+CREATE TABLE `ingredient_lists_recipes` (
+  `ingredient_list_id` int(10) unsigned zerofill NOT NULL,
+  `recipe_id` int(10) unsigned zerofill NOT NULL,
+  KEY `ilr_ingredient_list_id` (`ingredient_list_id`),
+  KEY `ilr_recipe_id` (`recipe_id`),
+  CONSTRAINT `ilr_recipe_id` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`),
+  CONSTRAINT `ilr_ingredient_list_id` FOREIGN KEY (`ingredient_list_id`) REFERENCES `ingredient_lists` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Table structure for table `ingredient_types` */
@@ -56,28 +79,6 @@ CREATE TABLE `ingredients` (
   CONSTRAINT `ingredient_type_id` FOREIGN KEY (`ingredient_type_id`) REFERENCES `ingredient_types` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
 
-/*Table structure for table `ingredients_recipes` */
-
-DROP TABLE IF EXISTS `ingredients_recipes`;
-
-CREATE TABLE `ingredients_recipes` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `recipe_id` int(10) unsigned zerofill NOT NULL,
-  `ingredient` varchar(64) NOT NULL,
-  `fractional_amount` varchar(3) DEFAULT NULL,
-  `whole_amount` int(2) unsigned DEFAULT NULL,
-  `measurement_type_id` int(10) unsigned zerofill DEFAULT NULL,
-  `instruction` varchar(64) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `ingredient_id` int(10) unsigned zerofill NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `measurement_type_id` (`measurement_type_id`),
-  KEY `recipe_id` (`recipe_id`),
-  CONSTRAINT `measurement_type_id` FOREIGN KEY (`measurement_type_id`) REFERENCES `measurements` (`id`),
-  CONSTRAINT `recipe_id` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 /*Table structure for table `measurements` */
 
 DROP TABLE IF EXISTS `measurements`;
@@ -92,22 +93,6 @@ CREATE TABLE `measurements` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
-/*Table structure for table `menu_recipes` */
-
-DROP TABLE IF EXISTS `menu_recipes`;
-
-CREATE TABLE `menu_recipes` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `recipe_id` int(10) unsigned zerofill NOT NULL,
-  `menu_id` int(10) unsigned zerofill NOT NULL,
-  `name` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `menu_id` (`menu_id`),
-  KEY `FK_recipe_id` (`recipe_id`),
-  CONSTRAINT `FK_recipe_id` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`),
-  CONSTRAINT `menu_id` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 /*Table structure for table `menus` */
 
 DROP TABLE IF EXISTS `menus`;
@@ -116,12 +101,25 @@ CREATE TABLE `menus` (
   `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `menu` varchar(64) NOT NULL,
   `description` text,
-  `user_id` int(10) unsigned zerofill NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
+  `user_id` int(10) unsigned zerofill NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Table structure for table `menus_recipes` */
+
+DROP TABLE IF EXISTS `menus_recipes`;
+
+CREATE TABLE `menus_recipes` (
+  `menu_id` int(10) unsigned zerofill NOT NULL,
+  `recipe_id` int(10) unsigned zerofill NOT NULL,
+  KEY `mr_menu_id` (`menu_id`),
+  KEY `mr_recipe_id` (`recipe_id`),
+  CONSTRAINT `mr_recipe_id` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`),
+  CONSTRAINT `mr_menu_id` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Table structure for table `recipe_types` */
@@ -149,6 +147,7 @@ CREATE TABLE `recipes` (
   `recipe_type_id` int(10) unsigned zerofill NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
+  `user_id` int(10) unsigned zerofill NOT NULL,
   PRIMARY KEY (`id`),
   KEY `recipe_type_id` (`recipe_type_id`),
   CONSTRAINT `recipe_type_id` FOREIGN KEY (`recipe_type_id`) REFERENCES `recipe_types` (`id`)
@@ -159,11 +158,11 @@ CREATE TABLE `recipes` (
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL,
-  `password` varchar(40) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `created` datetime DEFAULT NULL,
+  `id` int(10) unsigned zerofill NOT NULL,
+  `uname` varchar(32) NOT NULL,
+  `pword` varchar(128) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
