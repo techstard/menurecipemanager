@@ -1,170 +1,137 @@
-/*
-SQLyog Community Edition- MySQL GUI v8.12 
-MySQL - 5.1.35-community : Database - recipe_manager
-*********************************************************************
-*/
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-/*!40101 SET NAMES utf8 */;
-
-/*!40101 SET SQL_MODE=''*/;
-
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`recipe_manager` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
+CREATE SCHEMA IF NOT EXISTS `recipe_manager` DEFAULT CHARACTER SET latin1 ;
 USE `recipe_manager`;
 
-/*Table structure for table `ingredient_lists` */
+-- -----------------------------------------------------
+-- Table `recipe_manager`.`measurements`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `recipe_manager`.`measurements` (
+  `id` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
+  `measurement` VARCHAR(16) NULL DEFAULT NULL ,
+  `created` DATETIME NULL DEFAULT NULL ,
+  `modified` DATETIME NULL DEFAULT NULL ,
+  `abbreviation` VARCHAR(5) NULL DEFAULT NULL ,
+  `type` VARCHAR(16) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 14
+DEFAULT CHARACTER SET = latin1;
 
-DROP TABLE IF EXISTS `ingredient_lists`;
 
-CREATE TABLE `ingredient_lists` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `ingredient` varchar(64) NOT NULL,
-  `fractional_amount` float DEFAULT NULL,
-  `whole_amount` int(2) unsigned DEFAULT NULL,
-  `instruction` varchar(64) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `measurement_id` int(10) unsigned zerofill NOT NULL,
-  `ingredient_id` int(10) unsigned zerofill NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `measurement_id` (`measurement_id`),
-  KEY `ingredient_id` (`ingredient_id`),
-  CONSTRAINT `measurement_id` FOREIGN KEY (`measurement_id`) REFERENCES `measurements` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `ingredient_id` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- -----------------------------------------------------
+-- Table `recipe_manager`.`ingredient_types`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `recipe_manager`.`ingredient_types` (
+  `id` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
+  `ingredient_type` VARCHAR(64) NOT NULL DEFAULT '' ,
+  `description` VARCHAR(255) NULL DEFAULT NULL ,
+  `created` DATETIME NULL DEFAULT NULL ,
+  `modified` DATETIME NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 33
+DEFAULT CHARACTER SET = latin1;
 
-/*Table structure for table `ingredient_lists_recipes` */
 
-DROP TABLE IF EXISTS `ingredient_lists_recipes`;
+-- -----------------------------------------------------
+-- Table `recipe_manager`.`ingredients`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `recipe_manager`.`ingredients` (
+  `id` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
+  `ingredient` VARCHAR(64) NOT NULL DEFAULT '' ,
+  `ingredient_type_id` INT(10) UNSIGNED ZEROFILL NOT NULL ,
+  `description` VARCHAR(255) NULL DEFAULT NULL ,
+  `created` DATETIME NULL DEFAULT NULL ,
+  `modified` DATETIME NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `unique_ingredient` (`ingredient` ASC) ,
+  INDEX `ingredient_type_id` (`ingredient_type_id` ASC) ,
+  CONSTRAINT `ingredient_type_id`
+    FOREIGN KEY (`ingredient_type_id` )
+    REFERENCES `recipe_manager`.`ingredient_types` (`id` ))
+ENGINE = InnoDB
+AUTO_INCREMENT = 51
+DEFAULT CHARACTER SET = latin1;
 
-CREATE TABLE `ingredient_lists_recipes` (
-  `ingredient_list_id` int(10) unsigned zerofill NOT NULL,
-  `recipe_id` int(10) unsigned zerofill NOT NULL,
-  KEY `ilr_ingredient_list_id` (`ingredient_list_id`),
-  KEY `ilr_recipe_id` (`recipe_id`),
-  CONSTRAINT `ilr_recipe_id` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`),
-  CONSTRAINT `ilr_ingredient_list_id` FOREIGN KEY (`ingredient_list_id`) REFERENCES `ingredient_lists` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Table structure for table `ingredient_types` */
+-- -----------------------------------------------------
+-- Table `recipe_manager`.`recipe_types`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `recipe_manager`.`recipe_types` (
+  `id` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
+  `recipe_type` VARCHAR(64) NOT NULL ,
+  `created` DATETIME NULL DEFAULT NULL ,
+  `modified` DATETIME NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = latin1;
 
-DROP TABLE IF EXISTS `ingredient_types`;
 
-CREATE TABLE `ingredient_types` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `ingredient_type` varchar(64) NOT NULL DEFAULT '',
-  `description` varchar(255) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+-- -----------------------------------------------------
+-- Table `recipe_manager`.`recipes`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `recipe_manager`.`recipes` (
+  `id` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
+  `recipe` VARCHAR(64) NOT NULL DEFAULT '' ,
+  `description` TEXT NULL DEFAULT NULL ,
+  `instructions` TEXT NULL DEFAULT NULL ,
+  `servings` INT(2) NULL DEFAULT NULL ,
+  `recipe_type_id` INT(10) UNSIGNED ZEROFILL NOT NULL ,
+  `created` DATETIME NULL DEFAULT NULL ,
+  `modified` DATETIME NULL DEFAULT NULL ,
+  `user_id` INT(10) UNSIGNED ZEROFILL NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `recipe_type_id` (`recipe_type_id` ASC) ,
+  CONSTRAINT `recipe_type_id`
+    FOREIGN KEY (`recipe_type_id` )
+    REFERENCES `recipe_manager`.`recipe_types` (`id` ))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = latin1;
 
-/*Table structure for table `ingredients` */
 
-DROP TABLE IF EXISTS `ingredients`;
+-- -----------------------------------------------------
+-- Table `recipe_manager`.`ingredient_lists`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `recipe_manager`.`ingredient_lists` (
+  `id` INT(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT ,
+  `recipe_id` INT(10) UNSIGNED ZEROFILL NOT NULL ,
+  `ingredient_id` INT(10) UNSIGNED ZEROFILL NOT NULL ,
+  `measurement_id` INT(10) UNSIGNED ZEROFILL NOT NULL ,
+  `ingredient` VARCHAR(64) NOT NULL ,
+  `fractional_amount` FLOAT NULL DEFAULT NULL ,
+  `whole_amount` INT(2) UNSIGNED NULL DEFAULT NULL ,
+  `instruction` VARCHAR(64) NULL DEFAULT NULL ,
+  `created` DATETIME NULL DEFAULT NULL ,
+  `modified` DATETIME NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `measurement_id` (`measurement_id` ASC) ,
+  INDEX `ingredient_id` (`ingredient_id` ASC) ,
+  INDEX `recipe_id` (`recipe_id` ASC) ,
+  CONSTRAINT `measurement_id`
+    FOREIGN KEY (`measurement_id` )
+    REFERENCES `recipe_manager`.`measurements` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ingredient_id`
+    FOREIGN KEY (`ingredient_id` )
+    REFERENCES `recipe_manager`.`ingredients` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `recipe_id`
+    FOREIGN KEY (`recipe_id` )
+    REFERENCES `recipe_manager`.`recipes` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
-CREATE TABLE `ingredients` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `ingredient` varchar(64) NOT NULL DEFAULT '',
-  `ingredient_type_id` int(10) unsigned zerofill NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_ingredient` (`ingredient`),
-  KEY `ingredient_type_id` (`ingredient_type_id`),
-  CONSTRAINT `ingredient_type_id` FOREIGN KEY (`ingredient_type_id`) REFERENCES `ingredient_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
 
-/*Table structure for table `measurements` */
 
-DROP TABLE IF EXISTS `measurements`;
-
-CREATE TABLE `measurements` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `measurement` varchar(16) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `abbreviation` varchar(5) DEFAULT NULL,
-  `type` varchar(16) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
-
-/*Table structure for table `menus` */
-
-DROP TABLE IF EXISTS `menus`;
-
-CREATE TABLE `menus` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `menu` varchar(64) NOT NULL,
-  `description` text,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned zerofill NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Table structure for table `menus_recipes` */
-
-DROP TABLE IF EXISTS `menus_recipes`;
-
-CREATE TABLE `menus_recipes` (
-  `menu_id` int(10) unsigned zerofill NOT NULL,
-  `recipe_id` int(10) unsigned zerofill NOT NULL,
-  KEY `mr_menu_id` (`menu_id`),
-  KEY `mr_recipe_id` (`recipe_id`),
-  CONSTRAINT `mr_recipe_id` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`),
-  CONSTRAINT `mr_menu_id` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Table structure for table `recipe_types` */
-
-DROP TABLE IF EXISTS `recipe_types`;
-
-CREATE TABLE `recipe_types` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `recipe_type` varchar(64) NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
-/*Table structure for table `recipes` */
-
-DROP TABLE IF EXISTS `recipes`;
-
-CREATE TABLE `recipes` (
-  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `recipe` varchar(64) NOT NULL DEFAULT '',
-  `description` text,
-  `instructions` text,
-  `servings` int(2) DEFAULT NULL,
-  `recipe_type_id` int(10) unsigned zerofill NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `user_id` int(10) unsigned zerofill NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `recipe_type_id` (`recipe_type_id`),
-  CONSTRAINT `recipe_type_id` FOREIGN KEY (`recipe_type_id`) REFERENCES `recipe_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
-/*Table structure for table `users` */
-
-DROP TABLE IF EXISTS `users`;
-
-CREATE TABLE `users` (
-  `id` int(10) unsigned zerofill NOT NULL,
-  `uname` varchar(32) NOT NULL,
-  `pword` varchar(128) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

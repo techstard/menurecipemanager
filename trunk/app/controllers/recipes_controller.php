@@ -27,11 +27,9 @@ class RecipesController extends AppController
 		}
 
 		$fractions = array('' => '', '.0625' => '1/16', '.125' => '1/8', '.25' => '1/4', '.5' => '1/2', '.75' => '3/4', '.33' => '1/3', '.66' => '2/3');
-
-		$this->set('fractions', $fractions);
+		
 		$this->set('recipeTypes', $this->Recipe->RecipeType->find('list'));
-		$this->set('ingredients', $this->Recipe->Ingredient->find('list'));
-		$this->set('measurements', $this->Recipe->Measurement->find('list'));
+		$this->set('fractions', $fractions);
 	}
 	
     function edit($id = null)
