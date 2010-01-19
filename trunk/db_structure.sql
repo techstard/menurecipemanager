@@ -83,7 +83,6 @@ CREATE  TABLE IF NOT EXISTS `recipe_manager`.`recipes` (
   `recipe_type_id` INT(10) UNSIGNED ZEROFILL NOT NULL ,
   `created` DATETIME NULL DEFAULT NULL ,
   `modified` DATETIME NULL DEFAULT NULL ,
-  `user_id` INT(10) UNSIGNED ZEROFILL NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `recipe_type_id` (`recipe_type_id` ASC) ,
   CONSTRAINT `recipe_type_id`
