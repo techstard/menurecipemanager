@@ -26,28 +26,11 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><input type="text" name="whole" value=""/></td>
-			<td>
-				<select name="fractions">
-					<?php foreach($fractions as $d => $f): ?>
-						<option value="IngredientList.<?php echo $d; ?>"><?php echo $f; ?></option>
-					<?php endforeach ?>
-				</select>
-			</td>
-			<td>
-				<select name="measurement">
-					<?php foreach($measurements as $k => $v): ?>
-						<option value="IngredientList.<?php echo $k; ?>"><?php echo $v; ?></option>
-					<?php endforeach ?>
-				</select>
-			</td>
-			<td>				
-				<select name="ingredient">
-					<?php foreach($ingredient_list as $k => $v): ?>
-						<option value="IngredientList.<?php echo $k; ?>"><?php echo $v; ?></option>
-					<?php endforeach ?>
-				</select></td>
-			<td><input type="text" name="IngredientList.instruction" value=""/></td>
+			<td><?php $form->input('IngredientList.whole_amount', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList.fraction_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList.measurement_id', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList.ingredient_id', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList.instruction', array('label' => false)); ?></td>
 			<td><input type="button" value="Add Another" /></td>
 		</tr>
 	</tbody>
@@ -55,3 +38,8 @@
 <?php $form->end('Save Recipe'); ?>
 <?php $form->create('Recipe'); ?>
 </form>
+
+<?php
+	// Dump the view object to check for parameters
+	//var_dump($this);
+?>
