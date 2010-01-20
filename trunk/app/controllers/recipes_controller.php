@@ -17,6 +17,8 @@ class RecipesController extends AppController
 	
 	public function add()
 	{
+		var_dump($this->data);
+	/*
 		if (!empty($this->data)) 
 		{
 			if ($this->Recipe->save($this->data)) 
@@ -25,11 +27,13 @@ class RecipesController extends AppController
 				$this->redirect(array('action' => 'index'));
 			}
 		}
-
-		$fractions = array('' => '', '.0625' => '1/16', '.125' => '1/8', '.25' => '1/4', '.5' => '1/2', '.75' => '3/4', '.33' => '1/3', '.66' => '2/3');
+*/
+	//$fractions = array('' => '', '.0625' => '1/16', '.125' => '1/8', '.25' => '1/4', '.5' => '1/2', '.75' => '3/4', '.33' => '1/3', '.66' => '2/3');
 		
 		$this->set('recipeTypes', $this->Recipe->RecipeType->find('list'));
-		$this->set('fractions', $fractions);
+		$this->set('ingredients', $this->Recipe->IngredientList->Ingredient->find('list'));
+		$this->set('measurements', $this->Recipe->IngredientList->Measurement->find('list'));
+		$this->set('fractions', $this->Recipe->IngredientList->Fraction->find('list'));
 	}
 	
     function edit($id = null)
