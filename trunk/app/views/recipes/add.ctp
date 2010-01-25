@@ -26,11 +26,27 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><?php $form->input('IngredientList.whole_amount', array('label' => false)); ?></td>
-			<td><?php $form->input('IngredientList.fraction_id', array('label' => false, 'empty' => ' ')); ?></td>
-			<td><?php $form->input('IngredientList.measurement_id', array('label' => false)); ?></td>
-			<td><?php $form->input('IngredientList.ingredient_id', array('label' => false)); ?></td>
-			<td><?php $form->input('IngredientList.instruction', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList0.whole_amount', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList0.fraction_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList0.measurement_id', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList0.ingredient_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList0.instruction', array('label' => false)); ?></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><?php $form->input('IngredientList1.whole_amount', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList1.fraction_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList1.measurement_id', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList1.ingredient_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList1.instruction', array('label' => false)); ?></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><?php $form->input('IngredientList2.whole_amount', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList2.fraction_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList2.measurement_id', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList2.ingredient_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList2.instruction', array('label' => false)); ?></td>
 			<td><input type="button" value="Add Another" /></td>
 		</tr>
 	</tbody>
