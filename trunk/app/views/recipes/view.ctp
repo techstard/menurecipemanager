@@ -15,33 +15,30 @@
 			<td><?php echo $recipe['RecipeType']['recipe_type']; ?></td>
 			<td><?php echo $recipe['Recipe']['description']; ?></td>
 		</tr>
-		<tr>
-			<td colspan="4">
-				<table>
-					<thead>
-						<tr>
-							<th>Whole Amount</th>
-							<th>Fractional Amount</th>
-							<th>Measurement</th>
-							<th>Ingredient</th>
-							<th>Instruction</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach($recipe['IngredientList'] as $ingredient): ?>
-						<tr>
-							<td><?php echo $ingredient['whole_amount']; ?></td>
-							<td><?php echo $ingredient['fraction_amount']; ?></td>
-							<td><?php echo $ingredient['measurement']; ?></td>
-							<td><?php echo $ingredient['ingredient']; ?></td>
-							<td><?php echo $ingredient['instruction']; ?></td>
-						</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
-			</td>
-		</tr>
 	</tbody>
 </table>
 
-<?php var_dump($recipe); ?>
+<table>
+	<thead>
+		<tr>
+			<th>Whole Amount</th>
+			<th>Fractional Amount</th>
+			<th>Measurement</th>
+			<th>Ingredient</th>
+			<th>Instruction</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($recipe['IngredientList'] as $ingredient): ?>
+		<tr>
+			<td><?php echo $ingredient['whole_amount']; ?></td>
+			<td><?php echo $ingredient['Fraction']['fraction']; ?></td>
+			<td><?php echo $ingredient['Measurement']['measurement']; ?></td>
+			<td><?php echo $ingredient['Ingredient']['ingredient']; ?></td>
+			<td><?php echo $ingredient['instruction']; ?></td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>
+
+<?php //var_dump($recipe); ?>

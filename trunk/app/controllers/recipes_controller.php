@@ -11,7 +11,22 @@ class RecipesController extends AppController
 	    $this->Recipe->id = $id;
 	    if ( empty($this->data))
 	    {
-	        $this->set('recipe', $this->Recipe->read());
+	        $recipe = $this->Recipe->read();
+			
+			foreach($recipe['IngredientList'] as &$ingredient)
+			{
+				$t = $this->Recipe->IngredientList->Ingredient->read('ingredient', $ingredient['ingredient_id']);	
+				$ingredient['Ingredient'] = $t['Ingredient'];
+				
+				$t = $this->Recipe->IngredientList->Measurement->read('measurement', $ingredient['measurement_id']);
+				$ingredient['Measurement'] = $t['Measurement'];
+
+				$t = $this->Recipe->IngredientList->Fraction->read('fraction', $ingredient['fraction_id']);
+				$ingredient['Fraction'] = $t['Fraction'];
+				
+			}
+			
+	        $this->set('recipe', $recipe);
 	    }		
 	}
 	
