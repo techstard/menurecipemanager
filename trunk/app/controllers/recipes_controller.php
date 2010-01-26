@@ -24,14 +24,26 @@ class RecipesController extends AppController
 		{
 			
 			$ingredient_list = $this->reformat_ingredient_list($this->data);
-			var_dump($ingredient_list);
-			/* TEMPORARILY COMMENTED OUT TO PREVENT SAVING OF DATA
+			//var_dump($ingredient_list);
 			if ($this->Recipe->save($this->data)) 
 			{
+				$recipe_id = $this->Recipe->id;
+				foreach($ingredient_list as &$ingredient)
+				{
+					// Add the recipe_id to the ingredient
+					$ingredient['recipe_id'] = $recipe_id;
+					/*
+					 * Get the ingredient. This will be used in the future. The idea is that if a user enters an ingredient
+					 * that is not in the ingredients table we can add it here. The select list of of ingredients on the add 
+					 * page must be replaced with a type ahead input
+					 */
+					$ingredient['ingredient'] = $this->Recipe->IngredientList->Ingredient->field('ingredient', array('id' => $ingredient['ingredient_id']));
+					$this->Recipe->IngredientList->save($ingredient);
+				}
+				
 				$this->Session->setFlash('Your recipe has been saved.');
 				$this->redirect(array('action' => 'index'));
 			}
-			*/
 		}
 
 		$this->set('recipeTypes', $this->Recipe->RecipeType->find('list'));
