@@ -6,9 +6,10 @@
 		<tr>
 			<td><?php $form->input('Recipe.recipe'); ?></td>
 			<td><?php $form->input('Recipe.recipe_type_id'); ?></td>
+			<td><?php $form->input('Recipe.description'); ?></td>
 		</tr>
 		<tr>
-			<td colspan="2"><?php $form->input('Recipe.description'); ?></td>
+			<td colspan="3"><?php $form->input('Recipe.instructions'); ?></td>
 		</tr>
 	</tbody>
 </table>
