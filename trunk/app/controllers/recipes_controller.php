@@ -17,33 +17,15 @@ class RecipesController extends AppController
 	
 	public function add()
 	{
-		// Incoming data from the form
-		//var_dump($this->data);
-	
 		if (!empty($this->data)) 
 		{
-			
-			$ingredient_list = $this->reformat_ingredient_list($this->data);
-			//var_dump($ingredient_list);
-			if ($this->Recipe->save($this->data)) 
+			$this->reformat_data();
+			if ($this->Recipe->saveAll($this->data)) 
 			{
-				$recipe_id = $this->Recipe->id;
-				foreach($ingredient_list as &$ingredient)
-				{
-					// Add the recipe_id to the ingredient
-					$ingredient['recipe_id'] = $recipe_id;
-					/*
-					 * Get the ingredient. This will be used in the future. The idea is that if a user enters an ingredient
-					 * that is not in the ingredients table we can add it here. The select list of of ingredients on the add 
-					 * page must be replaced with a type ahead input
-					 */
-					$ingredient['ingredient'] = $this->Recipe->IngredientList->Ingredient->field('ingredient', array('id' => $ingredient['ingredient_id']));
-					$this->Recipe->IngredientList->save($ingredient);
-				}
-				
 				$this->Session->setFlash('Your recipe has been saved.');
 				$this->redirect(array('action' => 'index'));
 			}
+			
 		}
 
 		$this->set('recipeTypes', $this->Recipe->RecipeType->find('list'));
@@ -71,88 +53,38 @@ class RecipesController extends AppController
 	
     public function delete($id)
 	{
-	    $this->Recipe->delete($id);
+		$this->Recipe->delete($id, $cascade = true);
 	    $this->Session->setFlash('The recipe with id: '.$id.' has been deleted.');
 	    $this->redirect(array('action'=>'index'));
 	}
-
+	
 	/**
-	 * @method	reformat_ingredient_list
-	 * @param	array $data
-	 * @return 	array
-	 * @description	Takes in a list of the following structure:
-	 * 
-		array
-		  'Recipe' => 
-		    array
-		      'recipe' => string '' (length=0)
-		      'recipe_type_id' => string '0000000006' (length=10)
-		      'description' => string '' (length=0)
-		  'IngredientList0' => 
-		    array
-		      'whole_amount' => string '5' (length=1)
-		      'fraction_id' => string '' (length=0)
-		      'measurement_id' => string '0000000014' (length=10)
-		      'ingredient_id' => string '0000000053' (length=10)
-		      'instruction' => string 'chopped' (length=7)
-		  'IngredientList1' => 
-		    array
-		      'whole_amount' => string '' (length=0)
-		      'fraction_id' => string '0000000004' (length=10)
-		      'measurement_id' => string '0000000016' (length=10)
-		      'ingredient_id' => string '0000000052' (length=10)
-		      'instruction' => string 'bolied' (length=6)
-		  'IngredientList2' => 
-		    array
-		      'whole_amount' => string '1' (length=1)
-		      'fraction_id' => string '' (length=0)
-		      'measurement_id' => string '0000000016' (length=10)
-		      'ingredient_id' => string '0000000051' (length=10)
-		      'instruction' => string 'sliced' (length=6)
-
-	      
-	     And returns this:
-	     
-	     array
-			  0 => 
-			    array
-			      'whole_amount' => string '5' (length=1)
-			      'fraction_id' => string '' (length=0)
-			      'measurement_id' => string '0000000014' (length=10)
-			      'ingredient_id' => string '0000000053' (length=10)
-			      'instruction' => string 'chopped' (length=7)
-			  1 => 
-			    array
-			      'whole_amount' => string '' (length=0)
-			      'fraction_id' => string '0000000004' (length=10)
-			      'measurement_id' => string '0000000016' (length=10)
-			      'ingredient_id' => string '0000000052' (length=10)
-			      'instruction' => string 'bolied' (length=6)
-			  2 => 
-			    array
-			      'whole_amount' => string '1' (length=1)
-			      'fraction_id' => string '' (length=0)
-			      'measurement_id' => string '0000000016' (length=10)
-			      'ingredient_id' => string '0000000051' (length=10)
-			      'instruction' => string 'sliced' (length=6)
-	 * 
+	 * @method		reformat_data
+	 * @return 		void
+	 * @description	This method simply repackages the incoming form data into what CakePHP expects
+	 * 				to use for saving multiple records.
+	 * 				http://book.cakephp.org/view/75/Saving-Your-Data
 	 */
-	private function reformat_ingredient_list($data)
+	private function reformat_data()
 	{
-		$ingredient_list = array();
 		$key = 'IngredientList';
-		foreach($data as $k => $v)
+		$data = array();
+		
+		$data['Recipe'] = $this->data['Recipe'];
+		
+		foreach($this->data as $k => $v)
 		{
 			$row = str_split($k, strlen($key));
 			if($row[0] == $key)
 			{
 				if($this->is_valid_ingredient($v))
 				{
-					$ingredient_list[] = $v;
+					$data[$key][] = $v;
 				}
 			}
 		}
-		return $ingredient_list;
+		
+		$this->data = $data;
 	}
 
 	/**
