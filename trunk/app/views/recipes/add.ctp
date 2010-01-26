@@ -1,18 +1,19 @@
 <h1>Add Recipe</h1>
 
 <?php $form->create('Recipe'); ?>
-<table>
-	<tbody>
-		<tr>
-			<td><?php $form->input('Recipe.recipe'); ?></td>
-			<td><?php $form->input('Recipe.recipe_type_id'); ?></td>
-			<td><?php $form->input('Recipe.description'); ?></td>
-		</tr>
-		<tr>
-			<td colspan="3"><?php $form->input('Recipe.instructions'); ?></td>
-		</tr>
-	</tbody>
-</table>
+
+<div>
+	<?php $form->input('Recipe.recipe'); ?>
+</div>
+<div>
+	<?php $form->input('Recipe.recipe_type_id'); ?>
+</div>
+<div>
+	<?php $form->input('Recipe.description'); ?>
+</div>
+<div>
+	<?php $form->input('Recipe.instructions'); ?>
+</div>
 
 <table class="ingredient_list">
 	<thead>
