@@ -17,7 +17,8 @@ class RecipesController extends AppController
 	
 	public function add()
 	{
-		var_dump($this->data);
+		// Incoming data from the form
+		//var_dump($this->data);
 	
 		if (!empty($this->data)) 
 		{
