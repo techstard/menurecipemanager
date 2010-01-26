@@ -35,7 +35,6 @@ CREATE TABLE `ingredient_lists` (
   `recipe_id` int(10) unsigned zerofill NOT NULL,
   `ingredient_id` int(10) unsigned zerofill NOT NULL,
   `measurement_id` int(10) unsigned zerofill NOT NULL,
-  `ingredient` varchar(64) NOT NULL,
   `fraction_id` int(10) DEFAULT NULL,
   `whole_amount` int(2) unsigned zerofill DEFAULT NULL,
   `instruction` varchar(64) DEFAULT NULL,
@@ -48,7 +47,7 @@ CREATE TABLE `ingredient_lists` (
   CONSTRAINT `ingredient_id` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `measurement_id` FOREIGN KEY (`measurement_id`) REFERENCES `measurements` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `recipe_id` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `ingredient_types` */
 
@@ -61,7 +60,7 @@ CREATE TABLE `ingredient_types` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `ingredients` */
 
@@ -78,7 +77,7 @@ CREATE TABLE `ingredients` (
   UNIQUE KEY `unique_ingredient` (`ingredient`),
   KEY `ingredient_type_id` (`ingredient_type_id`),
   CONSTRAINT `ingredient_type_id` FOREIGN KEY (`ingredient_type_id`) REFERENCES `ingredient_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `measurements` */
 
@@ -104,7 +103,7 @@ CREATE TABLE `recipe_types` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `recipes` */
 
@@ -113,7 +112,7 @@ DROP TABLE IF EXISTS `recipes`;
 CREATE TABLE `recipes` (
   `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `recipe` varchar(64) NOT NULL DEFAULT '',
-  `description` text,
+  `description` varchar(64) DEFAULT NULL,
   `instructions` text,
   `servings` int(2) DEFAULT NULL,
   `recipe_type_id` int(10) unsigned zerofill NOT NULL,
@@ -122,7 +121,7 @@ CREATE TABLE `recipes` (
   PRIMARY KEY (`id`),
   KEY `recipe_type_id` (`recipe_type_id`),
   CONSTRAINT `recipe_type_id` FOREIGN KEY (`recipe_type_id`) REFERENCES `recipe_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
