@@ -34,7 +34,7 @@ class RecipesController extends AppController
 	{
 		if (!empty($this->data)) 
 		{
-			$this->reformat_data();
+			$this->clean_data();
 			if ($this->Recipe->saveAll($this->data)) 
 			{
 				$this->Session->setFlash('Your recipe has been saved.');
@@ -79,32 +79,23 @@ class RecipesController extends AppController
 	}
 	
 	/**
-	 * @method		reformat_data
-	 * @return 		void
-	 * @description	This method simply repackages the incoming form data into what CakePHP expects
-	 * 				to use for saving multiple records.
-	 * 				http://book.cakephp.org/view/75/Saving-Your-Data
+	 * @method	clean_data
+	 * @return 	void
+	 * @description	Loops through the ingredients and do various clean up tasks.
 	 */
-	private function reformat_data()
+	private function clean_data()
 	{
-		$key = 'IngredientList';
 		$data = array();
 		
-		$data['Recipe'] = $this->data['Recipe'];
-		
-		foreach($this->data as $k => $v)
+		foreach($this->data['IngredientList'] as $k => $ingredient)
 		{
-			$row = str_split($k, strlen($key));
-			if($row[0] == $key)
+			if($this->is_valid_ingredient($ingredient))
 			{
-				if($this->is_valid_ingredient($v))
-				{
-					$data[$key][] = $v;
-				}
+				$data[] = $ingredient;
 			}
 		}
 		
-		$this->data = $data;
+		$this->data['IngredientList'] = $data;
 	}
 
 	/**

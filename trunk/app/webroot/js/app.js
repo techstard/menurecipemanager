@@ -11,7 +11,7 @@ jQuery(document).ready( function() {
 	$.ingredient_row_clone = function(button)
 	{
 		id_key = 'IngredientList';
-		name_key = 'data[IngredientList'
+		name_key = 'data[IngredientList]['
 		
 		// Remove this button
 		$(button).remove(); // remove the button so we only have a button on the new row.
