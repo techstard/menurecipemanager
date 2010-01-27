@@ -46,8 +46,6 @@
 	</tbody>
 </table>	
 <?php $form->end('Save Recipe'); ?>
-<?php $form->create('Recipe'); ?>
-</form>
 
 <?php
 	// Dump the view object to check for parameters
