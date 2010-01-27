@@ -1,22 +1,20 @@
 <h1>Recipe</h1>
-<table>
-	<thead>
-		<tr>
-			<th>Recipe ID</th>
-			<th>Recipe</th>
-			<th>Recipe Type</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><?php echo $recipe['Recipe']['id']; ?></td>
-			<td><?php echo $recipe['Recipe']['recipe']; ?></td>
-			<td><?php echo $recipe['RecipeType']['recipe_type']; ?></td>
-			<td><?php echo $recipe['Recipe']['description']; ?></td>
-		</tr>
-	</tbody>
-</table>
+<div>
+	<label>Recipe</label>
+	<?php echo $recipe['Recipe']['recipe']; ?>
+</div>	
+<div>
+	<label>Type</label>
+	<?php echo $recipe['RecipeType']['recipe_type']; ?>
+</div>	
+<div>
+	<label>Description</label>
+	<?php echo $recipe['Recipe']['description']; ?>
+</div>
+<div>
+	<label>Instructions</label>
+	<?php echo $recipe['Recipe']['instructions']; ?>
+</div>
 
 <table>
 	<thead>
