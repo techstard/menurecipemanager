@@ -64,6 +64,11 @@ class RecipesController extends AppController
 	            $this->redirect(array('action'=>'index'));
 	        }
 	    }
+		
+		$this->set('recipeTypes', $this->Recipe->RecipeType->find('list'));
+		$this->set('ingredients', $this->Recipe->IngredientList->Ingredient->find('list'));
+		$this->set('measurements', $this->Recipe->IngredientList->Measurement->find('list'));
+		$this->set('fractions', $this->Recipe->IngredientList->Fraction->find('list'));
 	}
 	
     public function delete($id)
