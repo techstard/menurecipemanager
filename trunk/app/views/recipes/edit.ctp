@@ -17,6 +17,7 @@
 	<?php $form->input('Recipe.instructions'); ?>
 </div>
 
+<h3>Ingredient List</h3>
 <table class="ingredient_list">
 	<thead>
 		<tr>

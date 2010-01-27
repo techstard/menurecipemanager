@@ -16,6 +16,8 @@
 	<?php echo $recipe['Recipe']['instructions']; ?>
 </div>
 
+<h3>Ingredient List</h3>
+
 <table>
 	<thead>
 		<tr>
