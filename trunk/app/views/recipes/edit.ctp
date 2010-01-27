@@ -30,12 +30,36 @@
 		</tr>
 	</thead>
 	<tbody>
+		<?php foreach($this->data['IngredientList'] as $index => $ingredient): ?>
+		<tr>
+			<td><?php $form->input('IngredientList.'.$index.'.whole_amount', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList.'.$index.'.fraction_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList.'.$index.'.measurement_id', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList.'.$index.'.ingredient_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList.'.$index.'.instruction', array('label' => false)); ?></td>
+			<td>
+			<?php if( ($index + 1) == count($this->data['IngredientList'])): ?>	
+				<input type="button" value="Add Another" /></td>
+			<?php endif; ?>
+		</tr>
+		
+		<?php $final_row_index = count($this->data['IngredientList']); ?>
+		
+		<?php endforeach; ?>
+		<tr style="display:none;">
+			<td><?php $form->input('IngredientList.'.$final_row_index.'.whole_amount', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList.'.$final_row_index.'.fraction_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList.'.$final_row_index.'.measurement_id', array('label' => false)); ?></td>
+			<td><?php $form->input('IngredientList.'.$final_row_index.'.ingredient_id', array('label' => false, 'empty' => ' ')); ?></td>
+			<td><?php $form->input('IngredientList.'.$final_row_index.'.instruction', array('label' => false)); ?></td>
+			<td><input type="button" value="Add Another" /></td>
+		</tr>		
 	</tbody>
 </table>
 
 <?php
-	
 	echo $form->end('Update Recipe');
+	//var_dump($this);
 ?>
 
 

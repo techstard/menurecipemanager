@@ -58,7 +58,9 @@ class RecipesController extends AppController
 	    }
 	    else
 	    {
-	        if ($this->Recipe->save($this->data))
+			$this->clean_data();
+			
+			if ($this->Recipe->saveAll($this->data))
 	        {
 	            $this->Session->setFlash('Your recipe has been updated.');
 	            $this->redirect(array('action'=>'index'));
