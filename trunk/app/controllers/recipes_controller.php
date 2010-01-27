@@ -59,11 +59,13 @@ class RecipesController extends AppController
 	    else
 	    {
 			$this->clean_data();
-			
+			// TODO this is kind of a hack. I could not get the saveAll method to update the IngredientList
+			// it kept inserting new records.
+			$this->Recipe->IngredientList->deleteAll('WHERE recipe_id = ' . $id);
 			if ($this->Recipe->saveAll($this->data))
 	        {
-	            $this->Session->setFlash('Your recipe has been updated.');
-	            $this->redirect(array('action'=>'index'));
+				$this->Session->setFlash('Your recipe has been updated.');
+		           $this->redirect(array('action'=>'index'));
 	        }
 	    }
 		
