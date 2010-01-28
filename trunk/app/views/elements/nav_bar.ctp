@@ -26,3 +26,4 @@
 		<?php echo $html->link('Add Ingredient Type',array('controller' => 'ingredient_types', 'action' => 'add'))?>
 	</span>
 </div>
+<div><?php echo $html->link('Logout',array('controller' => 'users', 'action' => 'logout'))?></div>
