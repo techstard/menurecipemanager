@@ -1,5 +1,8 @@
 <div>
 	<span>
+		<?php echo $html->link('Menus',array('controller' => 'menus', 'action' => 'index'))?>
+	</span>
+	<span>
 		<?php echo $html->link('Recipes',array('controller' => 'recipes', 'action' => 'index'))?>
 	</span>
 	<span>
@@ -13,6 +16,9 @@
 	</span>
 </div>
 <div>
+	<span>
+		<?php echo $html->link('Add Menu',array('controller' => 'menus', 'action' => 'add'))?>
+	</span>
 	<span>
 		<?php echo $html->link('Add Recipe',array('controller' => 'recipes', 'action' => 'add'))?>
 	</span>

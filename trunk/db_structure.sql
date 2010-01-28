@@ -47,7 +47,7 @@ CREATE TABLE `ingredient_lists` (
   CONSTRAINT `ingredient_id` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `measurement_id` FOREIGN KEY (`measurement_id`) REFERENCES `measurements` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `recipe_id` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `ingredient_types` */
 
@@ -93,6 +93,29 @@ CREATE TABLE `measurements` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
+/*Table structure for table `menus` */
+
+DROP TABLE IF EXISTS `menus`;
+
+CREATE TABLE `menus` (
+  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `menu` varchar(24) NOT NULL,
+  `description` varchar(128) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `user_id` int(10) unsigned zerofill NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Table structure for table `menus_recipes` */
+
+DROP TABLE IF EXISTS `menus_recipes`;
+
+CREATE TABLE `menus_recipes` (
+  `menu_id` int(10) unsigned zerofill NOT NULL,
+  `recipe_id` int(10) unsigned zerofill NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 /*Table structure for table `recipe_types` */
 
 DROP TABLE IF EXISTS `recipe_types`;
@@ -121,7 +144,7 @@ CREATE TABLE `recipes` (
   PRIMARY KEY (`id`),
   KEY `recipe_type_id` (`recipe_type_id`),
   CONSTRAINT `recipe_type_id` FOREIGN KEY (`recipe_type_id`) REFERENCES `recipe_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `users` */
 
