@@ -1,9 +1,8 @@
-<div class="login">
-<h2>Login</h2>    
-    <?php echo $form->create('User', array('action' => 'login'));?>
-        <?php echo $form->input('username');?>
-        <?php echo $form->input('password');?>
-        <?php echo $form->submit('Login');?>
-    <?php echo $form->end(); ?>
-	<div><?php echo $html->link('Register',array('controller' => 'users', 'action' => 'register'))?></div>
-</div> 
+<?php
+    $session->flash('auth');
+    echo $form->create('User', array('action' => 'login'));
+    echo $form->input('username');
+    echo $form->input('password');
+    echo $form->end('Login');
+	echo $html->link('Register',array('controller' => 'users', 'action' => 'register'));
+?>

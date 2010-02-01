@@ -38,22 +38,13 @@
 class AppController extends Controller 
 {
 	public $helpers = array('Form', 'Html', 'Javascript');
+	public $components = array('Auth');
+
+	public function beforeFilter()
+	{
+		$this->Auth->loginRedirect = array('controller' => 'menus', 'action' => 'index');
+		$this->Auth->logoutRedirect = array('controller' => 'users', 'action' => 'register');
+	}
 	
-	function beforeFilter()
-    {
-        $this->__validateLoginStatus();
-    }
-	
-	function __validateLoginStatus()
-    {
-        if( ($this->action != 'login' && $this->action != 'logout') && ($this->action != 'register' && $this->action != 'register') )
-        {
-            if($this->Session->check('User') == false)
-            {
-                $this->redirect('/users/login');
-                $this->Session->setFlash('The URL you\'ve followed requires you login.');
-            }
-        }
-    } 
 }
 ?>
