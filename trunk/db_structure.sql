@@ -24,7 +24,7 @@ CREATE TABLE `fractions` (
   `fraction` varchar(8) NOT NULL,
   `decimal` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `ingredient_lists` */
 
@@ -60,7 +60,7 @@ CREATE TABLE `ingredient_types` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `ingredients` */
 
@@ -77,7 +77,7 @@ CREATE TABLE `ingredients` (
   UNIQUE KEY `unique_ingredient` (`ingredient`),
   KEY `ingredient_type_id` (`ingredient_type_id`),
   CONSTRAINT `ingredient_type_id` FOREIGN KEY (`ingredient_type_id`) REFERENCES `ingredient_types` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `measurements` */
 
@@ -91,7 +91,7 @@ CREATE TABLE `measurements` (
   `abbreviation` varchar(5) DEFAULT NULL,
   `type` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `menus` */
 
@@ -126,7 +126,7 @@ CREATE TABLE `recipe_types` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `recipes` */
 
@@ -144,6 +144,17 @@ CREATE TABLE `recipes` (
   PRIMARY KEY (`id`),
   KEY `recipe_type_id` (`recipe_type_id`),
   CONSTRAINT `recipe_type_id` FOREIGN KEY (`recipe_type_id`) REFERENCES `recipe_types` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Table structure for table `recipes_users` */
+
+DROP TABLE IF EXISTS `recipes_users`;
+
+CREATE TABLE `recipes_users` (
+  `user_id` int(10) unsigned zerofill NOT NULL,
+  `recipe_id` int(10) unsigned zerofill NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Table structure for table `users` */
