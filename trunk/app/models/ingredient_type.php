@@ -2,8 +2,7 @@
 class IngredientType extends AppModel
 {
     public $validate = array(
-		'ingredient_type' => array('rule'=>'notEmpty'), 
-		'description' => array('rule'=>'notEmpty')
+		'ingredient_type' => array('rule'=>'notEmpty')
 		);
 	
 	public $displayField = 'ingredient_type';
