@@ -6,6 +6,7 @@ class Recipe extends AppModel
 	public $hasMany = array( 
 						'IngredientList' => array('dependent'=> true) // dependent causes the IngredientList rows to be deleted with the recipe is deleted.
 						);
+						
 	public $hasAndBelongsToMany = array(
         'User' =>
             array(
@@ -22,7 +23,23 @@ class Recipe extends AppModel
                 'finderQuery'            => '',
                 'deleteQuery'            => '',
                 'insertQuery'            => ''
-            )
+            ),			
+        'Menu' =>
+            array(
+                'className'              => 'Menu',
+                'joinTable'              => 'menus_recipes',
+                'foreignKey'             => 'recipe_id',
+                'associationForeignKey'  => 'menu_id',
+                'unique'                 => true,
+                'conditions'             => '',
+                'fields'                 => '',
+                'order'                  => '',
+                'limit'                  => '',
+                'offset'                 => '',
+                'finderQuery'            => '',
+                'deleteQuery'            => '',
+                'insertQuery'            => ''
+            )			
     );				
 }
 ?>
