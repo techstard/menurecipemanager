@@ -1,6 +1,10 @@
 <h1>Add Recipe</h1>
 
-<?php $form->create('Recipe'); ?>
+<?php 
+	$form->create('Recipe'); 
+	echo $form->input('User.user_id', array('type'=>'hidden', 'value'=>$session->read('Auth.User.id'), 'label' => false )); 
+	
+?>
 
 <div>
 	<?php $form->input('Recipe.recipe'); ?>

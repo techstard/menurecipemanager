@@ -10,16 +10,21 @@ class UsersController extends AppController
      *  The AuthComponent provides the needed functionality
      *  for login, so you can leave this function blank.
      */
-    function login()
+    public function login()
     {
     }
     
-    function logout()
+	public function index()
+	{
+		$this->set('users', $this->User->find('all'));
+	}
+	
+    public function logout()
     {
         $this->redirect($this->Auth->logout());
     }
     
-    function register()
+    public function register()
     {
         if (! empty($this->data))
         {

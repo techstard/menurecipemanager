@@ -22,3 +22,5 @@
 <?php endforeach; ?>
 	</tbody>
 </table>
+
+<?php //var_dump($this); ?>
