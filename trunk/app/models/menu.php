@@ -8,8 +8,8 @@ class Menu extends AppModel
             array(
                 'className'              => 'Recipe',
                 'joinTable'              => 'menus_recipes',
-                'foreignKey'             => 'recipe_id',
-                'associationForeignKey'  => 'menu_id',
+                'foreignKey'             => 'menu_id',
+                'associationForeignKey'  => 'recipe_id',
                 'unique'                 => true,
                 'conditions'             => '',
                 'fields'                 => '',

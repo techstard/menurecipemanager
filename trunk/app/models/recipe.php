@@ -1,6 +1,8 @@
 <?php 
 class Recipe extends AppModel
 {
+	public $displayField = 'recipe';
+	
 	public $belongsTo = array('RecipeType');
 	
 	public $hasMany = array( 

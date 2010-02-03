@@ -9,7 +9,7 @@
 	<tbody>
 		<tr>
 			<td><?php echo $menu['Menu']['id']; ?></td>
-			<td><?php echo $menu['Menu']['recipe_type']; ?></td>
+			<td><?php echo $menu['Menu']['menu']; ?></td>
 		</tr>
 	</tbody>
 </table>

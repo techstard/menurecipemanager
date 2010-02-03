@@ -26,6 +26,7 @@ class MenusController extends AppController
 				$this->redirect(array('action' => 'index'));
 			}
 		}
+		$this->set('recipes', $this->Menu->Recipe->find('list'));
 	}
 	
     public function edit($id = null)

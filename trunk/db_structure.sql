@@ -47,7 +47,7 @@ CREATE TABLE `ingredient_lists` (
   CONSTRAINT `ingredient_id` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `measurement_id` FOREIGN KEY (`measurement_id`) REFERENCES `measurements` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `recipe_id` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `ingredient_types` */
 
@@ -105,7 +105,7 @@ CREATE TABLE `menus` (
   `modified` datetime DEFAULT NULL,
   `user_id` int(10) unsigned zerofill NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `menus_recipes` */
 
@@ -144,7 +144,7 @@ CREATE TABLE `recipes` (
   PRIMARY KEY (`id`),
   KEY `recipe_type_id` (`recipe_type_id`),
   CONSTRAINT `recipe_type_id` FOREIGN KEY (`recipe_type_id`) REFERENCES `recipe_types` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `recipes_users` */
 
@@ -169,7 +169,7 @@ CREATE TABLE `users` (
   `modified` datetime DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
