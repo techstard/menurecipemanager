@@ -1,7 +1,13 @@
 <h1>Recipe</h1>
 <div>
 	<label>Recipe</label>
-	<?php echo $recipe['Recipe']['recipe']; ?>
+	<?php 
+		echo $recipe['Recipe']['recipe'];
+		$form->create('Menu', array('url'=>'/menus/add_recipe')); 
+		echo $form->input('Recipe.recipe_id', array('value'=>$recipe['Recipe']['id'], 'label'=>false, 'type'=>'hidden')); 
+		echo $form->input('Menu.menu_id');
+		$form->end('Add to Menu');
+	?>
 </div>	
 <div>
 	<label>Type</label>

@@ -25,7 +25,7 @@ class RecipesController extends AppController
 				$ingredient['Fraction'] = $t['Fraction'];
 				
 			}
-			
+			$this->set('menus', $this->Recipe->Menu->find('list'));
 	        $this->set('recipe', $recipe);
 	    }		
 	}

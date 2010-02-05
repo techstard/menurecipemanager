@@ -52,5 +52,12 @@ class MenusController extends AppController
 	    $this->Session->setFlash('The menu with id: '.$id.' has been deleted.');
 	    $this->redirect(array('action'=>'index'));
 	}
+	
+	public function add_recipe()
+	{
+		$this->Menu->addRecipe($this->data);
+		$this->Session->setFlash('The recipe has been added to the menu');
+	    $this->redirect(array('controller'=>'recipes', 'action'=>'index'));		
+	}
 }
 ?>
