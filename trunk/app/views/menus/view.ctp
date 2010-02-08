@@ -1,15 +1,11 @@
 <h1>Menu</h1>
-<table>
-	<thead>
-		<tr>
-			<th>Menu ID</th>
-			<th>Menu</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><?php echo $menu['Menu']['id']; ?></td>
-			<td><?php echo $menu['Menu']['menu']; ?></td>
-		</tr>
-	</tbody>
-</table>
+
+<h3>Menu ID</h4>
+<div><?php echo $menu['Menu']['id']; ?></div>
+<h4>Menu</h4>
+<div><?php echo $menu['Menu']['menu']; ?></div>
+<h4>Recipes</h4>
+<?php foreach($menu['Recipe'] as $recipe): ?>
+	<div><?php echo $recipe['recipe'] ?></div>
+<?php endforeach; ?>
+
