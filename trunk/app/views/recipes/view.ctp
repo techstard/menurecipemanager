@@ -39,7 +39,7 @@
 		<tr>
 			<td><?php echo $ingredient['whole_amount']; ?></td>
 			<td><?php echo $ingredient['Fraction']['fraction']; ?></td>
-			<td><?php echo $ingredient['Measurement']['measurement']; ?></td>
+			<td><?php echo $ingredient['Measurement']['imperial']; ?></td>
 			<td><?php echo $ingredient['Ingredient']['ingredient']; ?></td>
 			<td><?php echo $ingredient['instruction']; ?></td>
 		</tr>
@@ -47,4 +47,4 @@
 	</tbody>
 </table>
 
-<?php //var_dump($recipe); ?>
+<?php //var_dump($recipe['IngredientList']); ?>
