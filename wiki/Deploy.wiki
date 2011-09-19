@@ -16,7 +16,7 @@ The Recipe Manager is written in PHP using the CakePHP framework. Storage is Mon
 
 == Application Structure ==
 <pre>
-    <vhosts-dir>
+    <vhosts-dir></br>
         _libraries/
             cake.1.3.7/
         recipe-manager/
