@@ -5,12 +5,12 @@ The Recipe Manager is written in PHP using the CakePHP framework. Storage is Mon
 
 = Requirements =
 
-  *PHP 5.*
-  **Mongo
-  *Apache 2.2
-  ** Rewrite
-  ** Vhosts
-  *MongoDB
+  * PHP 5.*
+    ** Mongo
+  * Apache 2.2
+    ** Rewrite
+    ** Vhosts
+  * MongoDB
 
 = Details =
 
