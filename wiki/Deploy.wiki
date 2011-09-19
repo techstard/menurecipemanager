@@ -14,7 +14,19 @@ The Recipe Manager is written in PHP using the CakePHP framework. Storage is Mon
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== Application Structure ==
+<pre>
+<vhosts-dir>
+    _libraries/
+        cake.1.3.7/
+    recipe-manager/
+        app/
+        .htaccess
+        bugs.txt
+        todo.txt
+</pre>
+
+Where app/ contains the CakePHP application structure.
+Where cake.1.3.7 contains the CakePHP core structure. 
+
+Use the CakePHP core that I provided because it includes the MongoDB datasource.
