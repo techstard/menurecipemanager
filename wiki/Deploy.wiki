@@ -27,6 +27,6 @@ The Recipe Manager is written in PHP using the CakePHP framework. Storage is Mon
         todo.txt
 </pre>
 
-  *Where app/ contains the CakePHP application structure.
-  *Where cake.1.3.7 contains the CakePHP core structure. 
-  *Use the CakePHP core that I provided because it includes the MongoDB datasource.
+  * Where app/ contains the CakePHP application structure.
+  * Where cake.1.3.7 contains the CakePHP core structure. 
+  * Use the CakePHP core that I provided because it includes the MongoDB datasource.
