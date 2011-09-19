@@ -1,9 +1,18 @@
-#How to install the Recipe Manager
+How to install the Recipe Manager
 
 = Introduction =
+The Recipe Manager is written in PHP using the CakePHP framework. Storage is MongoDB. UI uses jQuery.
 
-Add your content here.
+= Requirements =
 
+*PHP 5.*
+**Mongo
+
+*Apache 2.2
+** Rewrite
+** Vhosts
+
+*MongoDB
 
 = Details =
 
