@@ -33,3 +33,6 @@ The Recipe Manager is written in PHP using the CakePHP framework. Storage is Mon
 
 
 To create a user for the application you must know what the secret ingredient is. The string for the secret ingredient is in /config/app_config.php.
+
+
+Make sure to get the latest copy of the DB from the repository and install it to a MongoDB called recipe_manager.
